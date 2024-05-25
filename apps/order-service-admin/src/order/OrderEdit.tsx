@@ -1,12 +1,16 @@
 import * as React from "react";
+
 import {
   Edit,
   SimpleForm,
   EditProps,
+  ReferenceArrayInput,
+  SelectArrayInput,
+  NumberInput,
   ReferenceInput,
   SelectInput,
-  NumberInput,
 } from "react-admin";
+
 import { CustomerTitle } from "../customer/CustomerTitle";
 import { ProductTitle } from "../product/ProductTitle";
 
@@ -14,13 +18,14 @@ export const OrderEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <ReferenceInput
-          source="customer.id"
+        <ReferenceArrayInput
+          source="customer"
           reference="Customer"
-          label="Customer"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
         >
-          <SelectInput optionText={CustomerTitle} />
-        </ReferenceInput>
+          <SelectArrayInput optionText={CustomerTitle} />
+        </ReferenceArrayInput>
         <NumberInput label="Discount" source="discount" />
         <ReferenceInput source="product.id" reference="Product" label="Product">
           <SelectInput optionText={ProductTitle} />

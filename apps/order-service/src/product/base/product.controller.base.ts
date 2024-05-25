@@ -217,13 +217,6 @@ export class ProductControllerBase {
       ...query,
       select: {
         createdAt: true,
-
-        customer: {
-          select: {
-            id: true,
-          },
-        },
-
         discount: true,
         id: true,
 

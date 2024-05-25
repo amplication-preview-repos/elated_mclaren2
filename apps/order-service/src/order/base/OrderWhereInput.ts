@@ -11,7 +11,7 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
+import { CustomerListRelationFilter } from "../../customer/base/CustomerListRelationFilter";
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { FloatNullableFilter } from "../../util/FloatNullableFilter";
@@ -23,15 +23,15 @@ import { IntNullableFilter } from "../../util/IntNullableFilter";
 class OrderWhereInput {
   @ApiProperty({
     required: false,
-    type: () => CustomerWhereUniqueInput,
+    type: () => CustomerListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => CustomerWhereUniqueInput)
+  @Type(() => CustomerListRelationFilter)
   @IsOptional()
-  @Field(() => CustomerWhereUniqueInput, {
+  @Field(() => CustomerListRelationFilter, {
     nullable: true,
   })
-  customer?: CustomerWhereUniqueInput;
+  customer?: CustomerListRelationFilter;
 
   @ApiProperty({
     required: false,

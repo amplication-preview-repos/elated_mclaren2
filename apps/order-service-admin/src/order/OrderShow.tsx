@@ -4,10 +4,9 @@ import {
   SimpleShowLayout,
   ShowProps,
   DateField,
-  ReferenceField,
   TextField,
+  ReferenceField,
 } from "react-admin";
-import { CUSTOMER_TITLE_FIELD } from "../customer/CustomerTitle";
 import { PRODUCT_TITLE_FIELD } from "../product/ProductTitle";
 
 export const OrderShow = (props: ShowProps): React.ReactElement => {
@@ -15,13 +14,6 @@ export const OrderShow = (props: ShowProps): React.ReactElement => {
     <Show {...props}>
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
-        <ReferenceField
-          label="Customer"
-          source="customer.id"
-          reference="Customer"
-        >
-          <TextField source={CUSTOMER_TITLE_FIELD} />
-        </ReferenceField>
         <TextField label="Discount" source="discount" />
         <TextField label="ID" source="id" />
         <ReferenceField label="Product" source="product.id" reference="Product">

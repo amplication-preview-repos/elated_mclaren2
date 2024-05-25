@@ -4,11 +4,10 @@ import {
   Datagrid,
   ListProps,
   DateField,
-  ReferenceField,
   TextField,
+  ReferenceField,
 } from "react-admin";
 import Pagination from "../Components/Pagination";
-import { CUSTOMER_TITLE_FIELD } from "../customer/CustomerTitle";
 import { PRODUCT_TITLE_FIELD } from "../product/ProductTitle";
 
 export const OrderList = (props: ListProps): React.ReactElement => {
@@ -22,13 +21,6 @@ export const OrderList = (props: ListProps): React.ReactElement => {
     >
       <Datagrid rowClick="show">
         <DateField source="createdAt" label="Created At" />
-        <ReferenceField
-          label="Customer"
-          source="customer.id"
-          reference="Customer"
-        >
-          <TextField source={CUSTOMER_TITLE_FIELD} />
-        </ReferenceField>
         <TextField label="Discount" source="discount" />
         <TextField label="ID" source="id" />
         <ReferenceField label="Product" source="product.id" reference="Product">

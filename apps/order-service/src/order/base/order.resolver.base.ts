@@ -26,6 +26,7 @@ import { OrderFindUniqueArgs } from "./OrderFindUniqueArgs";
 import { CreateOrderArgs } from "./CreateOrderArgs";
 import { UpdateOrderArgs } from "./UpdateOrderArgs";
 import { DeleteOrderArgs } from "./DeleteOrderArgs";
+import { CustomerFindManyArgs } from "../../customer/base/CustomerFindManyArgs";
 import { Customer } from "../../customer/base/Customer";
 import { Product } from "../../product/base/Product";
 import { OrderService } from "../order.service";
@@ -93,12 +94,6 @@ export class OrderResolverBase {
       data: {
         ...args.data,
 
-        customer: args.data.customer
-          ? {
-              connect: args.data.customer,
-            }
-          : undefined,
-
         product: args.data.product
           ? {
               connect: args.data.product,
@@ -123,12 +118,6 @@ export class OrderResolverBase {
         ...args,
         data: {
           ...args.data,
-
-          customer: args.data.customer
-            ? {
-                connect: args.data.customer,
-              }
-            : undefined,
 
           product: args.data.product
             ? {
@@ -169,22 +158,23 @@ export class OrderResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Customer, {
-    nullable: true,
-    name: "customer",
-  })
+  @graphql.ResolveField(() => [Customer], { name: "customer" })
   @nestAccessControl.UseRoles({
     resource: "Customer",
     action: "read",
     possession: "any",
   })
-  async getCustomer(@graphql.Parent() parent: Order): Promise<Customer | null> {
-    const result = await this.service.getCustomer(parent.id);
+  async findCustomer(
+    @graphql.Parent() parent: Order,
+    @graphql.Args() args: CustomerFindManyArgs
+  ): Promise<Customer[]> {
+    const results = await this.service.findCustomer(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
